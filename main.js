@@ -1,8 +1,6 @@
 'use strict';
-console.log('in main.js');
 
-// use ngStorage
-var app = angular.module('MyApp', ['ngStorage']); // instantiating a NEW module named "MyApp"
+var app = angular.module('MyApp', ['ngStorage']); 
 
 app.controller('mainCtrl', function($scope, $localStorage) {
   $scope.$storage = $localStorage;  
@@ -29,7 +27,6 @@ app.controller('mainCtrl', function($scope, $localStorage) {
     console.log('add potion')
     var itemsArray = $localStorage.itemsArray || [];
     itemsArray.push($scope.newPotion);
-
     //$localStorage.itemsArray = itemsArray;  
     //$scope.potions.push($scope.newPotion);   
     $scope.newPotion = {};
@@ -58,5 +55,27 @@ app.controller('mainCtrl', function($scope, $localStorage) {
     $scope.editContact = potion;
 
     $('#myModal').modal('show'); 
+  };
+
+  $scope.reverse = false;
+
+  $scope.sortContacts = function(key) {
+    if($scope.reverse === false){
+      $scope.orderField = key;
+      $scope.reverse = true; 
+    }
+    else {
+      $scope.orderField = key;
+      $scope.reverse = false; 
+    }
+    
+    /*
+    console.log('key is: ', key);
+    if(key === 'name') {
+      console.log('inside key name');
+      $scope.
+      debugger;
+    }
+    */
   };
 });

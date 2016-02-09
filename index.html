@@ -70,25 +70,63 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-    <!--
+
+<!--
+
+<pre>Sorting predicate = {{predicate}}; reverse = {{reverse}}</pre>
+  <table class="friend">
+    <tr>
+      <th>
+          <button ng-click="order('name')">Name</button>
+          <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
+      </th>
+      <th>
+          <button ng-click="order('phoneNumber')">Phone Number</button>
+          <span class="sortorder" ng-show="predicate === 'phone'" ng-class="{reverse:reverse}"></span>
+      </th>
+      <th>
+          <button ng-click="order('email')">Email</button>
+          <span class="sortorder" ng-show="predicate === 'age'" ng-class="{reverse:reverse}"></span>
+      </th>
+    </tr>
+    <tr ng-repeat="potion in potions">
+      <td>{{potion.name}}</td>
+      <td>{{potion.color}}</td>
+      <td>{{potion.cost}}</td>
+    </tr>
+  </table>
+  -->
+
+
+<!--
     <div class="form-group">
       <label for="filter">Search</label>
       <input type="text" ng-mode='filterText' class='form-control'></input>
     </div>
+
     -->
-    <!-- 0 is falsey, which means ng-if will not show the table
+
+     <div class="form-group">
+        <label for="filter">Search</label>
+        <input ng-model="filterText" class="form-control", type="text", id="filter">
+      </div>
+  
+    <!--
+    0 is falsey, which means ng-if will not show the table
     ng-if. not in the DOM so ng-repeat won't execute - not there
     but ng-show will still try to execute ng-repeat which will produce err
     -->
+
     <table class='table' ng-if='potions.length' ng-class={lightsteelblue:true}>
       <thead>
         <tr>
           <th>#</th>
-          <th ng-repeat='(key, value) in potions[0]'>{{key}}</th>
+          <th ng-repeat='(key, value) in potions[0]' ng-click='sortContacts(key)'>{{key}}</th>
         </tr>
       </thead>
       <tbody>
-          <tr ng-repeat='(key, potion) in potions | filter:filterText track by $index' ng-class={lightsteelblue:$even}>
+           <!-- filter:filterText track by $index   filter:filterText  | orderBy: orderField track by $index -->
+          <tr ng-repeat='(key, potion) in potions|orderBy: orderField:reverse| filter: filterText track by $index' ng-class={lightsteelblue:$even}>
             <td>{{$index + 1}}</td> 
             <td ng-repeat='value in potion'>{{value}}</td>
             <td>
@@ -102,6 +140,8 @@
           </tr>
       </tbody>
     </table>
+
+
   </div>
   <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
