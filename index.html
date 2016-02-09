@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Contacts List</title>
-  <!-- <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"> -->
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <!-- Optional theme -->
@@ -17,21 +16,18 @@
     <form class="form-inline">
       <div class="form-group">
         <label for="nameLabel">Name</label>
-        <input ng-model='newPotion.name' type="text" class="form-control" placeholder="Name">
+        <input ng-model='newContact.name' type="text" class="form-control" placeholder="Name">
       </div>
       <div class="form-group">
-        <label for="colorLabel">Color</label>
-        <input ng-model='newPotion.color' type="text" class="form-control"  placeholder="Color">
+        <label for="phoneNumberLabel">Phone Number</label>
+        <input ng-model='newContact.phoneNumber' type="text" class="form-control"  placeholder="Phone Number">
       </div>
       <div class="form-group">
-        <label for="costLabel">Cost</label>
-        <input ng-model='newPotion.cost' type="text" class="form-control" placeholder="Cost"></input>
-        <!-- <button ng-click='deletePotion()'> Delete</button> -->
+        <label for="emailLabel">Email</label>
+        <input ng-model='newContact.email' type="text" class="form-control" placeholder="Email"></input>
       </div>
-      <button ng-click='addPotion()'type="button" class="btn btn-default">Add Potion</button>
-      <!-- <button ng-click="$storage.counter = $storage.counter + 1">{{$storage.counter}}</button> -->
+      <button ng-click='addContact()'type="button" class="btn btn-default">Add Contact</button>
     </form>
-
 
     <div class="modal fade" tabindex="-1" role="dialog" id='myModal'>
       <div class="modal-dialog">
@@ -48,100 +44,50 @@
               <input ng-model='editContact.name' type="text" class="form-control" placeholder="Name">
             </div>
             <div class="form-group">
-              <label for="colorLabel">Color</label>
-              <input ng-model='editContact.color' type="text" class="form-control"  placeholder="Color">
+              <label for="phoneNumberLabel">Phone Number</label>
+              <input ng-model='editContact.phoneNumber' type="text" class="form-control"  placeholder="Phone Number">
             </div>
           <div class="form-group">
-            <label for="costLabel">Cost</label>
-            <input ng-model='editContact.cost' type="text" class="form-control" placeholder="Cost"></input>
-            <!-- <button ng-click='deletePotion()'> Delete</button> -->
+            <label for="emailLabel">Email</label>
+            <input ng-model='editContact.email' type="text" class="form-control" placeholder="Email"></input>
           </div>
-          <!-- <button ng-click='addPotion()'type="button" class="btn btn-default">Add Potion</button> -->
-          <!-- <button ng-click="$storage.counter = $storage.counter + 1">{{$storage.counter}}</button> -->
         </form>
 
-          <!-- <p>One fine body&hellip;</p> -->
       </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button ng-click='closeModal()' type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button ng-click='saveEdits()' type="button" class="btn btn-primary">Save changes</button>
         </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
-<!--
-
-<pre>Sorting predicate = {{predicate}}; reverse = {{reverse}}</pre>
-  <table class="friend">
-    <tr>
-      <th>
-          <button ng-click="order('name')">Name</button>
-          <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
-      </th>
-      <th>
-          <button ng-click="order('phoneNumber')">Phone Number</button>
-          <span class="sortorder" ng-show="predicate === 'phone'" ng-class="{reverse:reverse}"></span>
-      </th>
-      <th>
-          <button ng-click="order('email')">Email</button>
-          <span class="sortorder" ng-show="predicate === 'age'" ng-class="{reverse:reverse}"></span>
-      </th>
-    </tr>
-    <tr ng-repeat="potion in potions">
-      <td>{{potion.name}}</td>
-      <td>{{potion.color}}</td>
-      <td>{{potion.cost}}</td>
-    </tr>
-  </table>
-  -->
-
-
-<!--
-    <div class="form-group">
-      <label for="filter">Search</label>
-      <input type="text" ng-mode='filterText' class='form-control'></input>
-    </div>
-
-    -->
-
-     <div class="form-group">
-        <label for="filter">Search</label>
-        <input ng-model="filterText" class="form-control", type="text", id="filter">
-      </div>
-  
-    <!--
-    0 is falsey, which means ng-if will not show the table
-    ng-if. not in the DOM so ng-repeat won't execute - not there
-    but ng-show will still try to execute ng-repeat which will produce err
-    -->
-
-    <table class='table' ng-if='potions.length' ng-class={lightsteelblue:true}>
+  <div class="form-group">
+    <label for="filter">Search</label>
+      <input ng-model="filterText" class="form-control", type="text", id="filter">
+  </div>
+    <table class='table' ng-if='contacts.length' ng-class={lightsteelblue:true}>
       <thead>
         <tr>
           <th>#</th>
-          <th ng-repeat='(key, value) in potions[0]' ng-click='sortContacts(key)'>{{key}}</th>
+          <th ng-repeat='(key, value) in contacts[0]' ng-click='sortContacts(key)'>{{key}}</th>
         </tr>
       </thead>
       <tbody>
            <!-- filter:filterText track by $index   filter:filterText  | orderBy: orderField track by $index -->
-          <tr ng-repeat='(key, potion) in potions|orderBy: orderField:reverse| filter: filterText track by $index' ng-class={lightsteelblue:$even}>
+          <tr ng-repeat='(key, contact) in contacts|orderBy: orderField:reverse| filter: filterText track by $index' ng-class={lightsteelblue:$even}>
             <td>{{$index + 1}}</td> 
-            <td ng-repeat='value in potion'>{{value}}</td>
+            <td ng-repeat='value in contact'>{{value}}</td>
             <td>
-              <button ng-click='deletePotion(potion)'>
+              <button ng-click='deleteContact(contact)'>
                 <span class='glyphicon glyphicon-trash'></span>
               </button>
-              <button ng-click='editPotion(potion)'>
-                <span class='glyphicon glyphicon-edit'> Edit</span>
+              <button ng-click='edit(contact)'>
+                <span class='glyphicon glyphicon-edit'> Edit </span>
               </button>
             </td>
           </tr>
       </tbody>
     </table>
-
-
   </div>
   <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
