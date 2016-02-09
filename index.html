@@ -31,6 +31,45 @@
       <button ng-click='addPotion()'type="button" class="btn btn-default">Add Potion</button>
       <!-- <button ng-click="$storage.counter = $storage.counter + 1">{{$storage.counter}}</button> -->
     </form>
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id='myModal'>
+      <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Modal title</h4>
+        </div>
+        <div class="modal-body">
+
+          <form class="form-inline">
+            <div class="form-group">
+              <label for="nameLabel">Name</label>
+              <input ng-model='editContact.name' type="text" class="form-control" placeholder="Name">
+            </div>
+            <div class="form-group">
+              <label for="colorLabel">Color</label>
+              <input ng-model='editContact.color' type="text" class="form-control"  placeholder="Color">
+            </div>
+          <div class="form-group">
+            <label for="costLabel">Cost</label>
+            <input ng-model='editContact.cost' type="text" class="form-control" placeholder="Cost"></input>
+            <!-- <button ng-click='deletePotion()'> Delete</button> -->
+          </div>
+          <!-- <button ng-click='addPotion()'type="button" class="btn btn-default">Add Potion</button> -->
+          <!-- <button ng-click="$storage.counter = $storage.counter + 1">{{$storage.counter}}</button> -->
+        </form>
+
+          <!-- <p>One fine body&hellip;</p> -->
+      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button ng-click='saveEdits()' type="button" class="btn btn-primary">Save changes</button>
+        </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
     <!--
     <div class="form-group">
       <label for="filter">Search</label>
@@ -55,6 +94,9 @@
             <td>
               <button ng-click='deletePotion(potion)'>
                 <span class='glyphicon glyphicon-trash'></span>
+              </button>
+              <button ng-click='editPotion(potion)'>
+                <span class='glyphicon glyphicon-edit'> Edit</span>
               </button>
             </td>
           </tr>

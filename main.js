@@ -8,7 +8,9 @@ app.controller('mainCtrl', function($scope, $localStorage) {
   $scope.$storage = $localStorage;  
   $scope.keys = Object.keys;
 
-  $scope.readPotion = function(){
+  console.log('in app controller');
+
+  $scope.readPotion = function() {
     if(!$localStorage.itemsArray) {
       $localStorage.itemsArray = [];  
       $scope.potions = $localStorage.itemsArray;
@@ -23,15 +25,38 @@ app.controller('mainCtrl', function($scope, $localStorage) {
 
   $scope.init(); 
 
-  $scope.addPotion = function(){
+  $scope.addPotion = function() {
+    console.log('add potion')
     var itemsArray = $localStorage.itemsArray || [];
     itemsArray.push($scope.newPotion);
-    $localStorage.itemsArray = itemsArray;     
+
+    //$localStorage.itemsArray = itemsArray;  
+    //$scope.potions.push($scope.newPotion);   
     $scope.newPotion = {};
+
   };
 
-  $scope.deletePotion = function(potion){
+  $scope.deletePotion = function(potion) {
     var itemIndex = $scope.potions.indexOf(potion);
     $localStorage.itemsArray.splice(itemIndex, 1);
+  };
+
+  $scope.saveEdits = function() {    
+    var itemsArray = $localStorage.itemsArray || [];
+
+    itemsArray[itemIndexG].name = $scope.editContact.name;
+    itemsArray[itemIndexG].color = $scope.editContact.phoneNumber;
+    itemsArray[itemIndexG].cost = $scope.editContact.email;
+
+    $('#myModal').modal('hide');
+  };
+
+  var itemIndexG = 0; 
+
+  $scope.editPotion = function(potion) {
+    itemIndexG = $scope.potions.indexOf(potion);
+    $scope.editContact = potion;
+
+    $('#myModal').modal('show'); 
   };
 });
