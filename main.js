@@ -4,33 +4,40 @@ console.log('in main.js');
 // use ngStorage
 var app = angular.module('MyApp', ['ngStorage']); // instantiating a NEW module named "MyApp"
 
-
-
 app.controller('mainCtrl', function($scope, $localStorage) {
+
   console.log('hello from main controller!');
+  console.log('before localStorage');
+  /*
+  $scope.$storage = $localStorage.$default({
+    counter: 42
+   });
+  */
   $scope.$storage = $localStorage;
-  $scope.potions = [];
+  //$localStorage = $localStorage.$default({itemsArray:[1,1,1]});     
+  
   $scope.keys = Object.keys;
+
 
   $scope.readPotion = function(){
     console.log('in read potion');
-    var itemsArray = $localStorage.itemsArray || [];
-    console.log('in read potion');
-    $scope.potions = itemsArray; 
+    if(!$localStorage.itemsArray) {
+      $localStorage.itemsArray = [];  
+      $scope.potions = $localStorage.itemsArray;
+    } else {
+      $scope.potions = $localStorage.itemsArray;
+    }
   };
-
+  
   $scope.init = function() {
+     console.log('inside init');
      $scope.readPotion();
   };
 
   $scope.init(); 
 
   $scope.addPotion = function(){
-    console.log('in addItem()');
-    console.log('new potion is: ', $scope.newPotion);
-    
-    $scope.potions.push($scope.newPotion);
-    
+    //$scope.potions.push($scope.newPotion);
     var itemsArray = $localStorage.itemsArray || [];
     itemsArray.push($scope.newPotion);
     $localStorage.itemsArray = itemsArray;     
